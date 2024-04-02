@@ -4,6 +4,9 @@ import edu.miu.cs.cs489apsd.lab1a.productmgmtapp.model.Product;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductMgmtApp {
 
@@ -17,7 +20,11 @@ public class ProductMgmtApp {
                 product1,product2,product3
         };
 
-        Arrays.stream(products).sorted();
+
+        // Sort the stream by name
+        Arrays.sort(products, Comparator.comparing(Product::getName));
+
+
         printProducts(products);
     }
 
@@ -30,7 +37,7 @@ public class ProductMgmtApp {
 
         for(Product p : products){
 
-            System.out.println(p);
+            System.out.println(p.toJSONString());
 
         }
 

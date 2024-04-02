@@ -71,4 +71,9 @@ public class Product {
     public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
+
+    public String toJSONString() {
+        return String.format("\t{ \"productId\":%d, \"name\":\"%s\", \"dateSupplied\":\"%s\", \"quantityInStock\":%d, \"unitPrice\":%,.2f }",
+                productId, name, dateSupplied, quantityInStock, unitPrice);
+    }
 }
