@@ -17,7 +17,6 @@ public class App
     public static void main( String[] args )
     {
 
-        System.out.println( "Hello World!" );
 
         PensionPlan p1 = new PensionPlan("EX1089",LocalDate.of(2023,01,17),
                 100.00);
@@ -60,7 +59,7 @@ public class App
         LocalDate today = LocalDate.now();
         LocalDate firstDayOfNextMonth = today.plusMonths(1).withDayOfMonth(1);
         LocalDate lastDayOfNextMonth = firstDayOfNextMonth.plusMonths(1).minusDays(1);
-
+        System.out.println("[");
         sortedList.stream().
                 filter(s -> s.getPensionPlan() == null)
                 .filter(employee -> employee.getEmploymentDate().plusYears(5).isBefore(lastDayOfNextMonth.plusDays(1)))
@@ -68,12 +67,15 @@ public class App
 
                 .sorted(Comparator.comparing(Employee::getEmploymentDate))
                 .forEach(s -> System.out.println(s.toJSONString()));
+        System.out.println("]");
 
     }
 
     private static void printList(List<Employee> sortedList) {
+        System.out.println("[");
 
         sortedList.stream().forEach(s -> System.out.println(s.toJSONString()));
+        System.out.println("]");
 
     }
 }
