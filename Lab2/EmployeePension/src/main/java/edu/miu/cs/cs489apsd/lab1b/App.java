@@ -41,7 +41,7 @@ public class App
         List<Employee> employeeList = List.of(daniel,benard,carly,wesley);
 
         List<Employee> sortedList = employeeList.stream().
-                sorted(Comparator.comparing(Employee::getLastName).reversed().thenComparing(Employee::getYearlySalary).reversed()
+                sorted(Comparator.comparing(Employee::getLastName).thenComparing(Employee::getYearlySalary,Comparator.reverseOrder())
                 ).collect(Collectors.toList());
 
 
