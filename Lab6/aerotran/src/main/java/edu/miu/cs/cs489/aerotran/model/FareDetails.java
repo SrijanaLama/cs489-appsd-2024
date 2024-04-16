@@ -7,23 +7,23 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Role  {
+@ToString
+public class FareDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long roleId;
-    private String roleName;
+    private Long fareDetailsId;
+    private String fair;
+    private String seatType;
 
-    public Role(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public Role(Long roleId) {
-        this.roleId = roleId;
+    public FareDetails(String fair, String seatType) {
+        this.fair = fair;
+        this.seatType = seatType;
     }
 }

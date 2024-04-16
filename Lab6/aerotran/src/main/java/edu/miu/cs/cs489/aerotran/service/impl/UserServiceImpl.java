@@ -1,6 +1,8 @@
 package edu.miu.cs.cs489.aerotran.service.impl;
 
 
+import edu.miu.cs.cs489.aerotran.dto.UserDto;
+import edu.miu.cs.cs489.aerotran.mapper.UserMapper;
 import edu.miu.cs.cs489.aerotran.model.User;
 import edu.miu.cs.cs489.aerotran.repository.UserRepository;
 import edu.miu.cs.cs489.aerotran.service.UserService;
@@ -14,9 +16,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public void saveUser(UserDto userDto) throws Exception {
+
+
+        userRepository.save(userMapper.convertDtoToEntity(userDto));
     }
 
     @Override
@@ -31,12 +39,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(Long userId) {
+    public void deleteByUserId(Long userId) {
         userRepository.deleteByUserId(userId);
     }
 
     @Override
     public List<User> getAllUser() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public Long saveUser(User user) {
+        return userRepository.save(user).getUserId();
     }
 }
