@@ -1,5 +1,6 @@
 package edu.miu.cs.cs489.aerotran.service;
 
+import edu.miu.cs.cs489.aerotran.dto.PassengerDto;
 import edu.miu.cs.cs489.aerotran.model.Passenger;
 import edu.miu.cs.cs489.aerotran.repository.PassengerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,13 @@ import java.util.List;
 
 public interface PassengerService {
 
-  void savePassenger(Passenger passenger);
+  void savePassenger(PassengerDto passengerDto);
 
-  Passenger getPassengerById(String passengerId);
+  Passenger getPassengerById(Long passengerId);
 
-  Passenger updatePassenger(Passenger passenger);
+  Passenger updatePassenger(PassengerDto passengerDto);
 
-  void deletePassengerById(String passengerId);
+  void deletePassengerById(Long passengerId);
 
   List<Passenger> getAllPassenger( );
 

@@ -1,4 +1,4 @@
-package edu.miu.cs.cs489.aerotran.model;
+package edu.miu.cs.cs489.aerotran.model.lookup;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Airline {
+public class AircraftType {
 
     @Id
-    private int airlineId;
-    private String airlineName;
+    private Long aircraftTypeId;
+    private String typeName;
+    private String description;
+
 
 }

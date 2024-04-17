@@ -1,30 +1,68 @@
 package edu.miu.cs.cs489.aerotran.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@EqualsAndHashCode(callSuper=false)
 @ToString
-public class Passenger  extends  Role{
+public class Passenger {
 
 
-    private String passengerId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long passengerId;
+
+    private String firstName;
+
+    private String lastName;
+
+    private LocalDate dateOfBirth;
+
     private String passengerStatus;
-//    @OneToMany
-//    private List<BookingDetails> bookingDetails;
+
+    private String userName;
+
+    private String email;
+
+    private String phoneNumber;
+
+    private Long userId;
 
 
-    public Passenger(Long userId, String userName, String password, String email, String phoneNumber, String passengerId, String passengerStatus) {
-       // super(userId, userName, password, email, phoneNumber);
-        this.passengerId = passengerId;
+
+
+    public Passenger(String firstName, String lastName, LocalDate dateOfBirth, String passengerStatus) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
         this.passengerStatus = passengerStatus;
     }
+
+    public Passenger(String firstName, String lastName, LocalDate dateOfBirth, String passengerStatus, String userName, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.passengerStatus = passengerStatus;
+        this.userName = userName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void copy(String firstName, String lastName, LocalDate dateOfBirth, String passengerStatus, String userName, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.passengerStatus = passengerStatus;
+        this.userName = userName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+
 }

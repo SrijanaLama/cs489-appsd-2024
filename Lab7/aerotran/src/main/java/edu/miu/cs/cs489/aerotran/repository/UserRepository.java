@@ -13,6 +13,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     Optional<User> findByUserId(Long userId);
 
-    @Query("DELETE FROM User u WHERE u.userId = :userId")
+
     void deleteByUserId(Long userId);
 }

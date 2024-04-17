@@ -1,8 +1,6 @@
 package edu.miu.cs.cs489.aerotran.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,15 +11,21 @@ import lombok.NoArgsConstructor;
 @Entity
 public class BookingDetail {
     @Id
-    private String bookingId;
+    @GeneratedValue(strategy =  GenerationType.AUTO)
+    private Long bookingId;
 
-    private String passengerId;
     private String seatNumber;
-    private String status;
-
-    @OneToOne
-    private Ticket ticket;
+    private String status;  //Paid //UnPaid
 
 
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Passenger passengerId;
 
+
+    public BookingDetail(String seatNumber, String status, Passenger passengerId) {
+        this.seatNumber = seatNumber;
+        this.status = status;
+        this.passengerId = passengerId;
+    }
 }

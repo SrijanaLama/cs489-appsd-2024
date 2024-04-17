@@ -1,13 +1,12 @@
 package edu.miu.cs.cs489.aerotran.controller;
 
+import edu.miu.cs.cs489.aerotran.dto.UserDto;
 import edu.miu.cs.cs489.aerotran.model.User;
 import edu.miu.cs.cs489.aerotran.service.UserService;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,17 +18,17 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<?> saveUser(@RequestBody User user){
+    public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) throws Exception {
         log.info("Inside saveUser method of User Controller");
-        userService.saveUser(user);
-        return  new ResponseEntity<User>(user,HttpStatus.CREATED);
+       userService.saveUser(userDto);
+        return  new ResponseEntity<>("Saved Successfully",HttpStatus.CREATED);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<?> updateUser(@PathVariable Long userId,@RequestBody User user){
+    public ResponseEntity<?> updateUser(@PathVariable Long userId,@RequestBody UserDto userDto) throws Exception {
         log.info("Inside updateUser method of User Controller");
-        user = userService.updateUser(user);
-        return  new ResponseEntity<User>(user,HttpStatus.OK);
+        User user = userService.updateUser(userDto);
+        return  new ResponseEntity<>("Updated Syccessfully",HttpStatus.OK);
     }
 
 
