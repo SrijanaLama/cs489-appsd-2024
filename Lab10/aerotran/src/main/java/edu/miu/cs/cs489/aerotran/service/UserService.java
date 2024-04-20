@@ -3,6 +3,7 @@ package edu.miu.cs.cs489.aerotran.service;
 import edu.miu.cs.cs489.aerotran.dto.UserDto;
 import edu.miu.cs.cs489.aerotran.model.Passenger;
 import edu.miu.cs.cs489.aerotran.model.User;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 

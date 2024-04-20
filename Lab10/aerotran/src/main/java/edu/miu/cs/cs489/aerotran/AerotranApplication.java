@@ -5,7 +5,6 @@ import edu.miu.cs.cs489.aerotran.model.Role;
 import edu.miu.cs.cs489.aerotran.model.lookup.AircraftType;
 import edu.miu.cs.cs489.aerotran.model.lookup.Airline;
 import edu.miu.cs.cs489.aerotran.model.lookup.Airport;
-import edu.miu.cs.cs489.aerotran.model.User;
 import edu.miu.cs.cs489.aerotran.repository.lookup.AircraftTypeRepository;
 import edu.miu.cs.cs489.aerotran.repository.lookup.AirlineRepository;
 import edu.miu.cs.cs489.aerotran.repository.lookup.AirportRepository;
@@ -14,10 +13,13 @@ import edu.miu.cs.cs489.aerotran.service.BookingDetailsService;
 import edu.miu.cs.cs489.aerotran.service.FlightService;
 import edu.miu.cs.cs489.aerotran.service.PassengerService;
 import edu.miu.cs.cs489.aerotran.service.UserService;
+import edu.miu.cs.cs489.aerotran.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -30,8 +32,7 @@ import java.util.List;
 @EnableTransactionManagement
 public class AerotranApplication  implements CommandLineRunner {
 
-	@Autowired
-	private UserService userService;
+
 
 	@Autowired
 	private FlightService flightService;
@@ -54,7 +55,8 @@ public class AerotranApplication  implements CommandLineRunner {
 	@Autowired
 	private RoleRepository roleRepository;
 
-
+	@Autowired
+	private UserServiceImpl userService;
 
 
 
@@ -79,7 +81,7 @@ public class AerotranApplication  implements CommandLineRunner {
 
 		//save user
 		userService.saveUser(user1);
-		userService.saveUser(user2);
+	    userService.saveUser(user2);
 
 
 		// save Passenger
@@ -228,8 +230,9 @@ public class AerotranApplication  implements CommandLineRunner {
 		Role role2 = new Role("Agent");
 		Role role3 = new Role("Admin");
 
-		roleRepository.saveAll(List.of(role1,role2,role3));
-
+		//roleRepository.saveAll(List.of(role1,role2,role3));
+	roleRepository.save(role1);
+		roleRepository.save(role2);
 
 
 
