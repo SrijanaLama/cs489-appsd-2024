@@ -10,6 +10,8 @@ import edu.miu.cs.cs489.aerotran.repository.UserRepository;
 import edu.miu.cs.cs489.aerotran.repository.UserRoleRepository;
 import edu.miu.cs.cs489.aerotran.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +31,14 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void saveUser(UserDto userDto) throws Exception {
@@ -85,6 +95,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user).getUserId();
+    }
+
+    @Override
+    public User getUserByUserName(String userName) {
+        return userRepository.findByUserName(userName).orElseThrow(()->
+                new UsernameNotFoundException("Not Found"));
     }
 }

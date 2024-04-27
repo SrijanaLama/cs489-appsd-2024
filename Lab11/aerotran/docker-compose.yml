@@ -1,0 +1,59 @@
+#services:
+#  mysqldb:
+#    image: mysql:8.0
+#    container_name: mysqldb
+#    #command: --default-authentication-plugin=caching_sha2_password
+#    restart: always
+#    environment:
+#      MYSQL_HOST: 'mysqlcontainer'
+#      MYSQL_PORT: '3307'
+#      MYSQL_DATABASE: 'cs489-apsd-aerotran'
+#      MYSQL_ROOT_PASSWORD: 'root'
+#    ports:
+#      - "3307:3306"
+#    networks:
+#          - springapimysql-net
+#  aerotran-app:
+#    build:
+#      context: .
+#      dockerfile: ./Dockerfile
+#    environment:
+#       SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3307/cs489-apsd-aerotran?serverTimezone=CDT
+#    ports:
+#      - "8081:8080"
+#    depends_on:
+#      - mysqldb
+#    volumes:
+#      - .m2:/root/.m2
+#networks:
+#    springapimysql-net:
+#
+
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cs489-apsd-aerotran
+      MYSQL_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  spring-boot-app:
+    image : .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3307/cs489-apsd-aerotran
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+volumes:
+  mysql-data:

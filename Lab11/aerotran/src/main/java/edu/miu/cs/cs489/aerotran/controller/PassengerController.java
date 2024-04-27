@@ -5,10 +5,12 @@ import edu.miu.cs.cs489.aerotran.dto.UserDto;
 import edu.miu.cs.cs489.aerotran.model.Passenger;
 import edu.miu.cs.cs489.aerotran.model.User;
 import edu.miu.cs.cs489.aerotran.service.PassengerService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,7 +42,9 @@ public class PassengerController {
         return  new ResponseEntity<Passenger>( passengerService.getPassengerById(passengerId),HttpStatus.OK);
     }
 
+
     @GetMapping("/")
+    @RolesAllowed({"ROLE_ADMIN", "ADMIN"})
     public ResponseEntity<?> getAllPassenger(){
         log.info("Inside getAllPassenger method of Passenger Controller");
         return  new ResponseEntity<>(passengerService.getAllPassenger(),HttpStatus.OK);

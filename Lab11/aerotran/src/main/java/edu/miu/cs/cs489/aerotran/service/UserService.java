@@ -19,4 +19,6 @@ public interface UserService {
     List<User> getAllUser( );
 
     Long saveUser(User user);
+
+    User getUserByUserName(String userName);
 }

@@ -8,6 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +22,21 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+    @NotBlank(message = "UserName cannot be blank")
+    @Column(unique = true)
     private String userName;
     private String password;
+
+    @NotBlank(message = "Email cannot be blank")
+    @Email(message = "Invalid email format")
+    @Column(unique = true)
     private String email;
+
+    @Size(min = 10, max = 15, message = "Phone number must be between 10 and 15 characters")
+    @Pattern(regexp = "\\d{10,15}", message = "Phone number must contain only digits and be between 10 and 15 characters")
+    @Column
     private String phoneNumber;
 
 
@@ -71,4 +85,5 @@ public class User {
         this.phoneNumber = phoneNumber;
 
     }
+
 }

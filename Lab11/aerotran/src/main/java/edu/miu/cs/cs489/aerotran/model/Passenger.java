@@ -3,6 +3,7 @@ package edu.miu.cs.cs489.aerotran.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,25 +16,31 @@ public class Passenger {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long passengerId;
 
+
+    @NotBlank(message = "FirstName is Required")
+    @Column(nullable = false)
     private String firstName;
 
+    @NotBlank(message = "LastName is Required")
+    @Column(nullable = false)
     private String lastName;
 
     private LocalDate dateOfBirth;
 
     private String passengerStatus;
 
-    private String userName;
+//    private String userName;
+//
+//    private String email;
+//
+//    private String phoneNumber;
 
-    private String email;
-
-    private String phoneNumber;
-
-    private Long userId;
-
+    @OneToOne
+    @JoinColumn(columnDefinition = "userId",referencedColumnName = "userId")
+    private  User user;
 
 
 
@@ -49,9 +56,9 @@ public class Passenger {
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.passengerStatus = passengerStatus;
-        this.userName = userName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+//        this.userName = userName;
+//        this.email = email;
+//        this.phoneNumber = phoneNumber;
     }
 
     public void copy(String firstName, String lastName, LocalDate dateOfBirth, String passengerStatus, String userName, String email, String phoneNumber) {
@@ -59,9 +66,9 @@ public class Passenger {
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.passengerStatus = passengerStatus;
-        this.userName = userName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+//        this.userName = userName;
+//        this.email = email;
+//        this.phoneNumber = phoneNumber;
     }
 
 

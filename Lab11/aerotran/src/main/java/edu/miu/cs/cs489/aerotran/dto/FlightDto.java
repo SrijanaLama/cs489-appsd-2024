@@ -8,10 +8,21 @@ public record FlightDto(String flightNumber, Long airlineId,
                         Long airportOriginId, Long airportDestinationId,
                         List<FareDetailsDto> fareDetailsDto,
                         LocalDateTime departureDateTime,
-                        LocalDateTime arrivalDateTime
+                        LocalDateTime arrivalDateTime,
+
+                        String airportOrigin,
+
+                        String airportDestination,
+
+                        String airline,
+
+                        String aircraftType,
+
+                        String aircraftDescription
+
                         ) {
 
-
-
-
+    public FlightDto(String flightNumber, Long airlineId, Long airCraftTypeId, Long airportOriginId, Long airportDestinationId, List<FareDetailsDto> fareDetailsDto, LocalDateTime departureDateTime, LocalDateTime arrivalDateTime) {
+        this(flightNumber, airlineId, airCraftTypeId, airportOriginId, airportDestinationId, fareDetailsDto, departureDateTime, arrivalDateTime, null, null, null, null, null);
+    }
 }

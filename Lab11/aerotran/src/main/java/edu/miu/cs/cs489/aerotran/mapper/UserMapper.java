@@ -8,6 +8,7 @@ import edu.miu.cs.cs489.aerotran.model.User;
 import edu.miu.cs.cs489.aerotran.model.UserRole;
 import edu.miu.cs.cs489.aerotran.repository.lookup.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -19,10 +20,13 @@ public class UserMapper {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public User convertDtoToEntity(UserDto userDto) throws  Exception{
         return Optional.ofNullable(userDto)
                 .map(dto ->{
-                    User user = new User(dto.userName(),dto.password(),dto.email(),dto.phoneNumber());
+                    User user = new User(dto.userName(),passwordEncoder.encode(dto.password()),dto.email(),dto.phoneNumber());
                     user.setUserRoles(dto.roles().stream().map(f->{
                         UserRole ur = new UserRole();
                         ur.setUser(user);

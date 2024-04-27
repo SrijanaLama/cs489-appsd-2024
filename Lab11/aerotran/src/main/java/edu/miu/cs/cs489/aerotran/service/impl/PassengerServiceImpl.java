@@ -38,7 +38,7 @@ public class PassengerServiceImpl implements PassengerService {
         user.setUserRoles(List.of(userRole));
 
         Long userId =  userService.saveUser(user);
-        passenger.setUserId(userId);
+        passenger.setUser(userService.getUserById(userId));
 
         passengerRepository.save(passenger);
     }
@@ -58,10 +58,10 @@ public class PassengerServiceImpl implements PassengerService {
 
         passengerRepository.save(passenger);
 
-        User user = userService.getUserById(passenger.getUserId());
-        user.setUserName(passenger.getUserName());
-        user.setEmail(passenger.getEmail());
-        user.setPhoneNumber(passenger.getPhoneNumber());
+        User user = userService.getUserById(passenger.getUser().getUserId());
+//        user.setUserName(passenger.getUserName());
+//        user.setEmail(passenger.getEmail());
+//        user.setPhoneNumber(passenger.getPhoneNumber());
 
         userService.saveUser(user);
 

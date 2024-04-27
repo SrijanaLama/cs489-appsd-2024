@@ -1,0 +1,42 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+
+      - name: Build with Gradle Wrapper
+        run: ./gradlew build
+
+      - name: Login to docker hub
+        run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
+      - name: Build docker image
+        run: docker build -t ${{secrets.DOCKER_REPO}} .
+      - name: Publish image to docker hub
+        run: docker push ${{secrets.DOCKER_REPO}}:latest
+
+#  deploy:
+#    needs: build
+#    runs-on: [aws-ec2]
+#    steps:
+#      - name: Pull Image from docker hub
+#        run: docker pull integrationninjas/springboot-example:latest
+#      - name: Delete old container
+#        run: docker rm -f springboot-example-container
+#      - name: Run docker container
+#        run: docker run -d -p 8080:8080 --name springboot-example-container integrationninjas/springboot-example

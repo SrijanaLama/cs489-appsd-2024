@@ -1,0 +1,6 @@
+# Exclude build artifacts
+*.o
+*.log
+
+# Exclude node_modules directory
+node_modules/

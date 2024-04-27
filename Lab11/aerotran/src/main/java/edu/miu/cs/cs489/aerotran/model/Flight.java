@@ -6,6 +6,10 @@ import edu.miu.cs.cs489.aerotran.model.lookup.Airport;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,10 +20,11 @@ import java.util.List;
 public class Flight {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long flightId;
 
-    @Column(unique = true)
+    @NotBlank(message = "FlightNumber is Required")
+    @Column(unique = true,nullable = false)
     private String flightNumber;
 
     @ManyToOne
@@ -43,8 +48,16 @@ public class Flight {
     @JoinColumn(name="flightId")
     private List<FareDetails> fareDetails;
 
+
+
+    @Column(nullable = false)
+    @NotNull(message = "Departure date and time is required")
+    @Future(message = "Departure date and time must be in the future")
     private LocalDateTime departureDateTime;
 
+    @Column(nullable = false)
+    @NotNull(message = "Arrival date and time is required")
+    @Future(message = "Arrival date and time must be in the future")
     private LocalDateTime arrivalDateTime;
 
 

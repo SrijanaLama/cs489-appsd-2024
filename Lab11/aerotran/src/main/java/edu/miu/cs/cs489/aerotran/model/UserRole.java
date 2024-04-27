@@ -20,13 +20,12 @@ import java.util.Objects;
 public class UserRole implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userRoleId;
 
     @ManyToOne
     @JoinColumn(name = "userId")
     @JsonBackReference
-
     private User user;
 
 

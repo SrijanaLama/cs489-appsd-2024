@@ -10,10 +10,7 @@ import edu.miu.cs.cs489.aerotran.repository.lookup.AircraftTypeRepository;
 import edu.miu.cs.cs489.aerotran.repository.lookup.AirlineRepository;
 import edu.miu.cs.cs489.aerotran.repository.lookup.AirportRepository;
 import edu.miu.cs.cs489.aerotran.repository.lookup.RoleRepository;
-import edu.miu.cs.cs489.aerotran.service.BookingDetailsService;
-import edu.miu.cs.cs489.aerotran.service.FlightService;
-import edu.miu.cs.cs489.aerotran.service.PassengerService;
-import edu.miu.cs.cs489.aerotran.service.UserService;
+import edu.miu.cs.cs489.aerotran.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -53,6 +50,9 @@ public class AerotranApplication  implements CommandLineRunner {
 
 	@Autowired
 	private RoleRepository roleRepository;
+
+	@Autowired
+	private SearchService searchService;
 
 
 
@@ -136,30 +136,59 @@ public class AerotranApplication  implements CommandLineRunner {
 				LocalDateTime.of(2024, 4, 10, 13, 0)    // arrivalDateTime
 		);
 
+		FlightDto flightDto3 = new FlightDto(
+				"XY5444",    // flightNumber
+				3L,          // airlineId
+				2L,          // airCraftTypeId
+				3l,4l,
+				List.of(     // List of FairDetailsDto
+						new FareDetailsDto("15.0", "Economy"),
+						new FareDetailsDto("200.0", "Business")
+				),
+				LocalDateTime.of(2024, 4, 10, 10, 30),  // departureDateTime
+				LocalDateTime.of(2024, 4, 10, 13, 0)    // arrivalDateTime
+		);
+
+		FlightDto flightDto4 = new FlightDto(
+				"WY5444",    // flightNumber
+				3L,          // airlineId
+				2L,          // airCraftTypeId
+				3l,4l,
+				List.of(     // List of FairDetailsDto
+						new FareDetailsDto("15.0", "Economy"),
+						new FareDetailsDto("200.0", "Business")
+				),
+				LocalDateTime.of(2024, 4, 11, 11, 30),  // departureDateTime
+				LocalDateTime.of(2024, 4, 12, 13, 0)    // arrivalDateTime
+		);
+
+
 
 		flightService.saveFlight(flightDto1);
 		flightService.saveFlight(flightDto2);
+		flightService.saveFlight(flightDto3);
+		flightService.saveFlight(flightDto4);
 
 
 
 		// Booking Details
 		// Booking 1
-		BookingDetailsDto booking1 = new BookingDetailsDto("A12", "Confirmed", 1L);
+		BookingDetailsDto booking1 = new BookingDetailsDto("A12", "Confirmed", 1L,1L);
 
 		// Booking 2
-		BookingDetailsDto booking2 = new BookingDetailsDto("B34", "Pending", 2L);
+		BookingDetailsDto booking2 = new BookingDetailsDto("B34", "Pending", 2L,3L);
 
 		// Booking 3
-		BookingDetailsDto booking3 = new BookingDetailsDto("C56", "Cancelled", 1L);
+		BookingDetailsDto booking3 = new BookingDetailsDto("C56", "Cancelled", 1L,3L);
 
 		// Booking 4
-		BookingDetailsDto booking4 = new BookingDetailsDto("D78", "Confirmed", 3L);
+		BookingDetailsDto booking4 = new BookingDetailsDto("D78", "Confirmed", 3L,2L);
 
 		// Booking 5
-		BookingDetailsDto booking5 = new BookingDetailsDto("E90", "Pending", 3L);
+		BookingDetailsDto booking5 = new BookingDetailsDto("E90", "Pending", 3L,2L);
 
 		// Booking 6
-		BookingDetailsDto booking6 = new BookingDetailsDto("F23", "Confirmed", 4L);
+		BookingDetailsDto booking6 = new BookingDetailsDto("F23", "Confirmed", 4L,4l);
 
 
 		bookingDetailsService.saveBookingDetails(booking1);
@@ -188,6 +217,8 @@ public class AerotranApplication  implements CommandLineRunner {
 
 		System.out.println("********** Booking Details *********");
 		bookingDetailsService.getAllBookingDetail().forEach(System.out::println);
+
+
 	}
 
 	private void saveLookUp() {
@@ -229,6 +260,8 @@ public class AerotranApplication  implements CommandLineRunner {
 		Role role3 = new Role("Admin");
 
 		roleRepository.saveAll(List.of(role1,role2,role3));
+
+		searchService.searchFlight(3l,2l,null);
 
 
 

@@ -11,21 +11,26 @@ import lombok.NoArgsConstructor;
 @Entity
 public class BookingDetail {
     @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long bookingId;
 
     private String seatNumber;
-    private String status;  //Paid //UnPaid
+    private String status;
 
 
     @ManyToOne
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "passengerId")
     private Passenger passengerId;
 
+    @ManyToOne
+    @JoinColumn(name = "flightId")
+    private Flight flight;
 
-    public BookingDetail(String seatNumber, String status, Passenger passengerId) {
+
+    public BookingDetail(String seatNumber, String status, Passenger passengerId,Flight flight) {
         this.seatNumber = seatNumber;
         this.status = status;
         this.passengerId = passengerId;
+        this.flight = flight;
     }
 }
